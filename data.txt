@@ -1,0 +1,23 @@
+customer; John; Smith; 20200 
+customer; Robert; Williams; 20221
+customer; James; Miller;20232
+category; Laptops 
+category; Tablets
+category; Phones
+product; Laptops; 1015; HP; HP - 15.6" Laptop - Intel Core i5 - 6GB Memory - 750GB Hard Drive - Black Licorice; 800.50
+product; Laptops; 1020; Dell; New! Dell - Inspiron 5000 Series 15.6" Laptop - Intel Core i7 - 6GB Memory - 1TB Hard Drive - Black; 500.89
+product; Laptops; 1088; Sony; Sony - VAIO Duo Ultrabook Convertible 11.6" Touch-Screen Laptop - 6GB Memory - Gun Metallic ; 1288.09
+product; Phones; 1108; iPhone 5; Apple - iPhone 5c 8GB Cell Phone - Yellow (AT&T); 550.00
+product; Phones; 1166; iPhone 6 Case; Case-Mate - Naked Tough Case for Apple® iPhone® 6 - Clear; 50.00
+product; Phones; 1182; iPhone 6+; Apple - iPhone 6 Plus 16GB - Gold (Sprint); 750.00
+product; Phones; 1125; Glaxy 5; Samsung - Galaxy S 5 Cell Phone - Charcoal Black (Sprint); 575.59
+product; Tablets; 1221; iPad mini; Apple - iPad mini 3 Wi-Fi 128GB - Space Gray; 290.15
+product; Tablets; 1235; iPad mini 2; Apple - iPad® mini 2 with Wi-Fi - 16GB - Silver; 350.15
+product; Tablets; 1250; iPad mini 3; Apple - iPad mini 3 Wi-Fi 128GB - Space Gray; 450.06
+product; Tablets; 1263; iPad Air; Apple - iPad Air 2 Wi-Fi 16GB - Space Gray; 510.88
+product; Tablets; 1274; Samsung Tablet; Samsung - Galaxy Tab Pro - 10.1" - 16GB - Black; 299.00
+purchase; 20200; Phones;  1166; 1; 02/20/2016
+purchase; 20200; Phones;  1125; 2; 04/09/2016
+purchase; 20232; Tablets; 1274; 1; 06/28/2016
+purchase; 20232; Phones;  1166; 3; 06/29/2016
+purchase; 20232; Laptops; 1088; 1; 08/22/2016
