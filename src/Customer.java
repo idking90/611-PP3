@@ -42,6 +42,28 @@ public class Customer {
 		return null;
 	}
 
+	public int getID() {
+		return id;
+	}
+	
+	public String getfName() {
+		return fName;
+	}
+	public String getLName() {
+		return lName;
+	}
+	
+	public void setID(int newID) {
+		this.id=newID;
+		
+	}
+	public void setFName(String newFName) {
+		this.fName = newFName;
+	}
+	public void setLName(String newLName) {
+		this.lName = newLName;
+		
+	}
    // add missing setters and getters methods for the private data fields.
 
 

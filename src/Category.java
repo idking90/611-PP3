@@ -36,4 +36,13 @@ public class Category {
 		// searches for a product in the product array by product name
 	return null;
     }
+	
+
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String newName) {
+		this.name=newName;
+	}
 }

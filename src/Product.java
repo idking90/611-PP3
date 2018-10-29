@@ -24,7 +24,39 @@ public class Product {
 				+ description + ", price=" + price + "]";
 	}
 
+	public int getID() {
+		return id;
+	}
 	
+	public double getPrice() {
+		return price;
+	}
+	
+	public String getName() {
+		return name;
+	}
 
+	public String getDescription() {
+		return description;
+	}
+	
+	
+	public void setID(int newID) {
+		this.id=newID;
+		
+	}
+	
+	public void setPrice(double newPrice) {
+		this.price=newPrice;
+	}
+	
+	public void setName(String newName) {
+		this.name=newName;
+	}
+	
+	public void setDescription(String newDesc) {
+		this.description=newDesc;
+		
+	}
 
 }

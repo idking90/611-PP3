@@ -2,6 +2,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 import javax.swing.*;
@@ -30,6 +32,8 @@ public class UserGUI extends JPanel implements ActionListener {
 	 
 	  private TechStore techStore;
 	  private String fileName = "data.txt";
+	  
+	  
 	  
 	  public UserGUI() {
 		  
@@ -183,11 +187,12 @@ public class UserGUI extends JPanel implements ActionListener {
 
 	  void close(){
 	      System.exit(0);
-	  }// end of transfer action event method
+	  }
 
 
 	public static void main(String[] args) {
-	   JFrame f = new JFrame("Tech Store");
+	   
+		JFrame f = new JFrame("Tech Store");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = f.getContentPane();
         contentPane.add( new UserGUI());
@@ -199,9 +204,62 @@ public class UserGUI extends JPanel implements ActionListener {
 	}
 
 	public void buyButton_ActionPerformed(ActionEvent e) {
-		//buyProduct validation, action, etc....
-		txtArTrans.append("purchase made"); //**for testing********
-	}
+		
+		Customer theCustomer;
+		int numItems = 0;
+		String catName = "";
+		Product theProduct;
+		Date theDate;
+		String dateAsString="";
+		Date now = new Date();
+		
+		//assigning variables first validating for type/format validity
+		try {
+		theCustomer = techStore.getCustomer(cboCustomer.getSelectedItem().toString());
+		numItems = Integer.parseInt(txtAmount.getText());
+		catName = cboCategory.getSelectedItem().toString();
+		theProduct = techStore.getProduct(catName, cboProduct.getSelectedItem().toString());
+		dateAsString = txtDate.getText();
+		theDate = new SimpleDateFormat("MM/dd/yyyy").parse(dateAsString);
+		
+		}
+		catch(Exception ex) {
+			badPurchaseTrx();
+			return;
+		}
+		
+		//checking logical validity of these two variables
+		if(numItems < 1 || theDate.after(now)) {
+			badPurchaseTrx();
+			return;
+		}
+		
+		
+		try {
+			techStore.addPurchase(theCustomer, catName, theProduct, numItems, dateAsString);
+		}
+		catch(Exception ex) {
+			badPurchaseTrx();
+			return;
+		}
+		
+		//will only get to this point if the purchase occurs successfully
+		String s = " | ";
+		double purchaseTotal = numItems * theProduct.getPrice() * 1.0;
+		String purchaseAddedToOutputArea = "\n PURCHASE INFO: Name-" + theCustomer.getfName() + " " + theCustomer.getLName() + s +
+										"Category-" + catName + s + "Product-" + theProduct.getName() + s +
+										"Amount-" + numItems + s + "Date-" + dateAsString + s + "Total-$" + purchaseTotal;
+		
+		txtArTrans.append(purchaseAddedToOutputArea);
+		
+		//clearing inputs for next purchase
+		cboCategory.setSelectedIndex(0);
+		cboProduct.setSelectedIndex(0);
+		cboCustomer.setSelectedIndex(0);
+		txtAmount.setText("");
+		txtDate.setText("MM/dd/yyyy");
+		
+	}//end buyButton_action
 	
 	public void cboCustomer_ActionPerformed(ActionEvent e) {
 		//change txtArTrans
@@ -219,7 +277,9 @@ public class UserGUI extends JPanel implements ActionListener {
 		
 	}
 	
-	
+	public void badPurchaseTrx() {
+		JOptionPane.showMessageDialog(null, "ERROR inputting that transaction. Try again", "ERROR", JOptionPane.ERROR_MESSAGE);
+	}
 	
 	
 	

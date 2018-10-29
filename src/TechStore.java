@@ -25,20 +25,23 @@ public class TechStore {
 			// Creates and adds a new Category object to the categories array
 	}
 
-	public void addPurchase(Customer customer, String categoryName, Product prod, int amont, String date) {
+	public void addPurchase(Customer customer, String categoryName, Product prod, int amount, String date) {
 		// calls customer object to purchase a product
+		customer.addPurchase(categoryName, prod, amount, date);
+		String lineInFile = "purchase; " + customer.getID() + "; " + categoryName + "; "+ prod.getID() + " ;" + amount + "; " + date;		
+		writeFile(lineInFile);
 	}
 	
 	public void addProduct(String categoryName, int id, String name, String description, double price) {
 		// Adds a product object to Category object that matches the categoryName parameter
 	}
 	
-	public Customer getCustomre(String name){
-		// search for a Customer object by customer name in the customers array
+	public Customer getCustomer(String name){
+				
 		return null;
 	}
 
-	public Customer getCustomre(int customerID){
+	public Customer getCustomer(int customerID){
 			// search for a Customer object by customer id in the customers array 
 			return null;
 	}
