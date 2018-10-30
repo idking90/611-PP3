@@ -24,7 +24,7 @@ public class Category {
 	
 	public Product[] getProducts(){
 		//returns all the products objects with the current category object
-		return null;
+		return products;
 	}
 
 	public Product getProduct(int productID){

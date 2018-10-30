@@ -8,13 +8,13 @@ public class Customer {
 	private Purchase [] purchases;
 	static int numberOfCustomers = 0;
 
-	public Customer(String fName, String lName, int id, int n) {
+	public Customer(String fName, String lName, int id) { //int n to be passed?
 		
 		this.fName = fName;
 		this.lName = lName;
 		this.id = id;
 		numberOfCustomers++;
-		purchases = new Purchase[n];
+		//purchases = new Purchase[n];
 	}
 
 	public Purchase addPurchase(String categoryName, Product prod, int amont, String date) {
