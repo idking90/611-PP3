@@ -56,7 +56,7 @@ public class UserGUI extends JPanel implements ActionListener {
       
 		  
 		 techStore = new TechStore(fileName);
-       techStore.readFile(fileName);
+      // techStore.readFile(fileName);
        
      
        
@@ -98,6 +98,8 @@ public class UserGUI extends JPanel implements ActionListener {
 	    		
 	    	}
 	    });
+	    
+	  
 
 	  } // end of constructor
 
@@ -110,10 +112,13 @@ public class UserGUI extends JPanel implements ActionListener {
 		 lblAmount = new JLabel("Amount: ");
 		 lblDate = new JLabel("Date: ");
 		 lblTrans = new JLabel("Transactions: ");
-		 
-		 String[] productTypes = {"", "Laptops", "Tablets", "Cell Phones"};
-		 cboCategory = new JComboBox(productTypes); //might want to populate blank and let read-in of file actually initiate the list
-		 cboCustomer = new JComboBox();
+		
+		 String[] productTypes;
+		 productTypes = techStore.getCatNames();
+		 cboCategory = new JComboBox(productTypes);
+		 String[] custNames;
+		 custNames = techStore.getCustFullNames();
+		 cboCustomer = new JComboBox(custNames);
 		 cboProduct = new JComboBox(); 
 		 
 		 txtAmount = new JTextField("", 15);
@@ -121,13 +126,13 @@ public class UserGUI extends JPanel implements ActionListener {
 		 txtDate = new JTextField("mm/dd/yyyy", 15);
 		 txtDate.setToolTipText("Enter date of purchase as MM/DD/YYYY");
 		 
-		 txtArProduct = new JTextArea(5, 15);
+		 txtArProduct = new JTextArea(5, 300);
 		 txtArProduct.setEditable(false);
 		 txtArProduct.setLineWrap(true);
 		 txtArProduct.setWrapStyleWord(true);
 		 txtArProduct.append("Product Info...");
 		 scrollProduct = new JScrollPane(txtArProduct);
-		 txtArTrans = new JTextArea(10, 50);
+		 txtArTrans = new JTextArea(10, 300);
 		 txtArTrans.setEditable(false);
 		 txtArTrans.setLineWrap(true);
 		 txtArTrans.setWrapStyleWord(true);
@@ -147,6 +152,7 @@ public class UserGUI extends JPanel implements ActionListener {
 	      JPanel buy = new JPanel();
 	      JPanel buyBtnPan = new JPanel();
 	      JPanel bottom = new JPanel();
+	      JPanel txtArPan = new JPanel();
 	      JPanel exitPanel = new JPanel();
 	      
 
@@ -173,8 +179,10 @@ public class UserGUI extends JPanel implements ActionListener {
 	      buyBtnPan.setLayout(new FlowLayout(FlowLayout.CENTER));
 	      buyBtnPan.add(btnBuy);
 
-	      bottom.setLayout( new GridLayout(2, 1));
+	   bottom.setLayout( new GridLayout(2, 1));
+	   bottom.setPreferredSize(new Dimension(300, 500));
 	      bottom.add(lblTrans);
+	      
 	      bottom.add(txtArTrans);
 	      
 	      
@@ -282,17 +290,56 @@ public class UserGUI extends JPanel implements ActionListener {
 	
 	public void cboCustomer_ActionPerformed(ActionEvent e) {
 		//change txtArTrans
-		txtArTrans.append("cboCustomer changed"); //testing********
+		if(cboCustomer.getSelectedItem().toString().trim().equals("")) {//nothing selected
+			return;
+		}
+		
+		Customer cust=techStore.getCustomer(cboCustomer.getSelectedItem().toString());
+		
+		Purchase[] purchHist = cust.getPurchases();
+		
+		
+		String purchHistStr="\n";
+		for(int i=0; i<purchHist.length; i++) {
+			if(purchHist[i]==null) {//found end of useful part of array
+				break;
+			}
+			purchHistStr += purchHist[i].toString() + "\n";
+		}
+		txtArTrans.setText("CUSTOMER'S PURCHASE HISTORY:" + purchHistStr);
 	}
 	
 	public void cboCategory_ActionPerformed(ActionEvent e) {
 		//update cboProduct
-		txtArProduct.append("cboCat changed"); //this is for testing**********
+		if(cboCategory.getSelectedItem().toString().trim().equals("")) {
+			return;
+		}
+		Category theCat = techStore.getCategory(cboCategory.getSelectedItem().toString());
+		Product[] products = theCat.getProducts();
+		cboProduct.removeAllItems();
+		cboProduct.addItem(" ");
+		for(int i=0; i<products.length; i++) {
+			if(products[i]==null) {
+				break;
+			}
+			else {
+				cboProduct.addItem(products[i].getName());
+			}
+		}
+		
+		
 	}
 	
 	public void cboProduct_ActionPerformed(ActionEvent e) {
 		//update txtArProduct
-		txtArProduct.append("cboProduct changed"); //this is for testing***********
+		if(cboProduct.getSelectedItem().toString().trim().equals("")) {
+			return;
+		}
+		else {
+			Product theProduct = techStore.getProduct(cboCategory.getSelectedItem().toString(),
+					cboProduct.getSelectedItem().toString());
+			txtArProduct.setText("PRODUCT INFO: "+theProduct.toString());
+		}
 		
 	}
 	

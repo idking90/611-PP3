@@ -10,11 +10,12 @@ public class TechStore {
 	private String fileName;
 
 	// Constructor
-	public TechStore(String fileName) {
+	public TechStore(String fileName) throws FileNotFoundException {
 		// instantiate the TechStore object
 		this.fileName = fileName;
 		this.customers = new Customer[3];
 		this.categories = new Category[3];
+		this.readFile(fileName);
 	}
 	
 		
@@ -47,7 +48,7 @@ public class TechStore {
 		// calls customer object to purchase a product
 		customer.addPurchase(categoryName, prod, amount, date);
 		String lineInFile = "purchase; " + customer.getID() + "; " + categoryName + "; "+ prod.getID() + " ;" + amount + "; " + date;		
-		writeFile(lineInFile);
+		writeFile(lineInFile);//might need to move to Purchase class method
 	}
 	
 	public void addProduct(String categoryName, int id, String name, String description, double price) {
@@ -60,9 +61,9 @@ public class TechStore {
 
 		for(int i=0; i<customers.length; i++) {
 			if (customers[i]==null) {
-				return null;
+				break;
 			}
-			String fullName = customers[i].getfName() + " " +customers[i].getLName();
+			String fullName = customers[i].getfName().trim() + " " + customers[i].getLName().trim();
 			if (fullName.equals(name)) {
 				return customers[i];
 			}
@@ -70,6 +71,21 @@ public class TechStore {
 		return null;
 	}
 
+	public Customer[] getAllCustomers() {
+		return customers;
+	}
+	
+	public String[] getCustFullNames() {
+		String[] custNames = new String[customers.length + 1];
+		custNames[0]=" ";
+		for(int i=0; i<customers.length;i++) {
+			if(customers[i]==null) {
+				return null;
+			}
+			custNames[i+1]=customers[i].getfName().trim() + " " + customers[i].getLName().trim();
+		}
+		return custNames;
+	}
 	public Customer getCustomer(int customerID){
 			// search for a Customer object by customer id in the customers array 
 		for(int i=0; i<customers.length; i++) {
@@ -136,7 +152,20 @@ public class TechStore {
 		return null;
     }
 	
-	
+	public Category[] getCategories() {
+		return categories;
+	}
+	public String[] getCatNames() {
+		String[] catNames = new String[categories.length + 1];
+		catNames[0]=" ";
+		for(int i=0; i<categories.length;i++) {
+			if(categories[i]==null) {
+				return null;
+			}
+			catNames[i+1]=categories[i].getName();
+		}
+		return catNames;
+	}
 	public void readFile(String fileName) throws FileNotFoundException {
 		// read data from the data.txt file and instantiate all project objects (arrays).
 		// some object arrays are in other objects such as customer and category classes
@@ -152,7 +181,7 @@ public class TechStore {
          
          
          //separates/declares every object in each line, not sure if this is the approach I should be taking
-            if (type[0].matches("customer")) {
+            if (type[0].equalsIgnoreCase("customer")) {
                String fName = type[1];
                String lName = type[2];
                int id = Integer.parseInt(type[3].trim());
@@ -160,13 +189,13 @@ public class TechStore {
                addCustomer(fName, lName, id);
                
                
-            } else if (type[0].matches("category")) {
+            } else if (type[0].equalsIgnoreCase("category")) {
                String category = type[1].trim(); 
                
                addCategory(category);
                System.out.println(categories[0].toString()); //**testing to make sure object is created
                
-            } else if (type[0].matches("product")) {
+            } else if (type[0].equalsIgnoreCase("product")) {
                String categoryName = type[1].trim(); 
                int productId = Integer.parseInt(type[2].trim());
                String name = type[3].trim();
@@ -176,15 +205,17 @@ public class TechStore {
                addProduct(categoryName, productId, name, description, price);
                System.out.println(categories[0].getProducts()[0].toString()); //shows first product of first category, just to test method calls
                
-            } else if (type[0].matches("purchase")) {
+            } else if (type[0].equalsIgnoreCase("purchase")) {
                int custId = Integer.parseInt(type[1].trim());
-               String categoryName = type[2];
+               String categoryName = type[2].trim();
                int productId = Integer.parseInt(type[3].trim());
                int amount = Integer.parseInt(type[4].trim());
-               String purchaseDate = type[5];
+               String purchaseDate = type[5].trim();
                
-               //not sure what to do here yet
-               //addPurchase(custId, categoryName, productId, amount, purchaseDate);
+               Customer cust = getCustomer(custId);
+               Product prod = getProduct(categoryName, productId);
+               addPurchase(cust, categoryName, prod, amount, purchaseDate);
+               System.out.println("thisCustPurch0 " + cust.getPurchases()[0].toString());//for now, shows first purchase of first customer just to prove it successfully creates
                 
             } else {
                System.out.println("error!");

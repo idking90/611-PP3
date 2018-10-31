@@ -52,7 +52,11 @@ public class Purchase {
 		this.purchaseDate=newDate;
 	}
 
-
+	public String toString() {
+		String tmpStr = "PURCHASE Category=" + getCategoryName() + "| Product=" + getProduct().getName() +
+				"| amount=" + getAmount() + "| date=" + getPurchaseDate() + "| Purchase total=$" + (getProduct().getPrice() * getAmount());
+		return tmpStr;
+	}
 
 
 
