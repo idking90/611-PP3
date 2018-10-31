@@ -1,5 +1,5 @@
 
-
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
@@ -31,14 +31,35 @@ public class UserGUI extends JPanel implements ActionListener {
 	 
 	 
 	  private TechStore techStore;
-	  private String fileName = "data.txt";
+	  private static String fileName = "data.txt";
+
 	  
 	  
 	  
-	  public UserGUI() {
+	  public UserGUI() throws FileNotFoundException  {
+     
+      int n = 0;
+
+      boolean isNum = false;
+         while (!isNum) {
+         try {   
+	         n = Integer.parseInt(JOptionPane.showInputDialog("Input the number of purchases."));
+            isNum = true;
+            if(n < 1) { //this will revert to continue the loop if 0 or negative is entered
+            	isNum=false;
+            }
+         } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "An incorrectly formatted value was entered. Make sure number is an integer.", 
+            "Incorrect Entry!", JOptionPane.INFORMATION_MESSAGE);
+           }
+         }
+      
 		  
 		 techStore = new TechStore(fileName);
-
+       techStore.readFile(fileName);
+       
+     
+       
 	    initGUI();
 	    doTheLayout();
 	    
@@ -190,18 +211,16 @@ public class UserGUI extends JPanel implements ActionListener {
 	  }
 
 
-	public static void main(String[] args) {
-	   
+	public static void main(String[] args) throws FileNotFoundException {
+
 		JFrame f = new JFrame("Tech Store");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container contentPane = f.getContentPane();
-        contentPane.add( new UserGUI());
-        f.pack();
-        f.setSize(500, 500);
-
-        f.setVisible(true);
-
-	}
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      Container contentPane = f.getContentPane();
+      contentPane.add(new UserGUI());
+      f.pack();
+      f.setSize(500, 500);
+      f.setVisible(true);
+  }
 
 	public void buyButton_ActionPerformed(ActionEvent e) {
 		
@@ -280,19 +299,7 @@ public class UserGUI extends JPanel implements ActionListener {
 	public void badPurchaseTrx() {
 		JOptionPane.showMessageDialog(null, "ERROR inputting that transaction. Try again", "ERROR", JOptionPane.ERROR_MESSAGE);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// placeholder, not actually using this method
