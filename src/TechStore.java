@@ -1,4 +1,7 @@
+package TechStore;
 
+import java.util.Scanner;
+import java.io.*;
 
 public class TechStore {
 
@@ -44,7 +47,7 @@ public class TechStore {
 	public void addProduct(String categoryName, int id, String name, String description, double price) {
 		// Adds a product object to Category object that matches the categoryName parameter
 		Category theCategory = getCategory(categoryName);
-		theCategory.addProduct(id, name, description, price);
+		theCategory.addProduct(id, name, description, price); //causes "Exception in thread "main" java.lang.NullPointerException"
 	}
 	
 	public Customer getCustomer(String name){
@@ -128,10 +131,61 @@ public class TechStore {
     }
 	
 	
-	public void readFile() {
+	public void readFile(String fileName) throws FileNotFoundException {
 		// read data from the data.txt file and instantiate all project objects (arrays).
 		// some object arrays are in other objects such as customer and category classes
 		// it creates object for each string data in the input file, line by line
+      
+      java.io.File file = new java.io.File(fileName);
+	   Scanner input = new Scanner(file);
+      
+      while (input.hasNext()) {
+         String line = input.nextLine();
+         System.out.println(line);
+         String[] type = line.split(";");
+         
+         
+         //separates/declares every object in each line, not sure if this is the approach I should be taking
+            if (type[0].matches("customer")) {
+               String fName = type[1];
+               String lName = type[2];
+               int id = Integer.parseInt(type[3].trim());
+                              
+               addCustomer(fName, lName, id);
+               
+            } else if (type[0].matches("category")) {
+               String category = type[1]; 
+               
+               addCategory(category);             
+               
+            } else if (type[0].matches("product")) {
+               String categoryName = type[1]; 
+               int productId = Integer.parseInt(type[2].trim());
+               String name = type[3];
+               String description = type[4];
+               double price = Double.parseDouble(type[5].trim());
+               
+               addProduct(categoryName, productId, name, description, price);
+               
+            } else if (type[0].matches("purchase")) {
+               int custId = Integer.parseInt(type[1].trim());
+               String categoryName = type[2];
+               int productId = Integer.parseInt(type[3].trim());
+               int amount = Integer.parseInt(type[4].trim());
+               String purchaseDate = type[5];
+               
+               //not sure what to do here yet
+               //addPurchase(custId, categoryName, productId, amount, purchaseDate);
+                
+            } else {
+               System.out.println("error!");
+            } 
+              
+         }
+
+	    input.close();
+
+    
 	}
 
     public void writeFile(String trans) {
