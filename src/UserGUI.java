@@ -1,3 +1,4 @@
+package TechStore;
 
 import java.io.*;
 import java.awt.*;
@@ -30,19 +31,14 @@ public class UserGUI extends JPanel implements ActionListener {
 	 private JButton btnExit;
 	 private static int numPurch = 0;
 	 private static int maxPurch;
-	 
-	 
-	  private static TechStore techStore;
-	  private static String fileName = "data.txt";
 
-	  
-	  
-	  
+	 private static TechStore techStore;
+	 private static String fileName = "data.txt";
+
+
 	  public UserGUI() throws FileNotFoundException  {
       // techStore.readFile(fileName);
-       
-     
-       
+
 	    initGUI();
 	    doTheLayout();
 	    

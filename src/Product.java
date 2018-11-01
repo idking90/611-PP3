@@ -1,3 +1,4 @@
+package TechStore;
 
 public class Product {
 	
@@ -20,8 +21,8 @@ public class Product {
 	
 	public String toString() {
 		// it should returns all the product object info
-		return "Product [id=" + id + ", name=" + name + ", description="
-				+ description + ", price=" + price + "]";
+		return "Product [ID = " + id + ", Name = " + name + ", Description = "
+				+ description + ", Price = $" + price + "]";
 	}
 
 	public int getID() {

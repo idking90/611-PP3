@@ -1,4 +1,4 @@
-
+package TechStore;
 
 import java.util.Scanner;
 import java.io.*;
@@ -176,11 +176,9 @@ public class TechStore {
       
       while (input.hasNext()) {
          String line = input.nextLine();
-         System.out.println(line);
          String[] type = line.split(";");
-         
-         
-         //separates/declares every object in each line, not sure if this is the approach I should be taking
+
+         //separates/declares every object in each line
             if (type[0].equalsIgnoreCase("customer")) {
                String fName = type[1];
                String lName = type[2];
@@ -193,7 +191,7 @@ public class TechStore {
                String category = type[1].trim(); 
                
                addCategory(category);
-               System.out.println(categories[0].toString()); //**testing to make sure object is created
+               // System.out.println(categories[0].toString()); //**testing to make sure object is created
                
             } else if (type[0].equalsIgnoreCase("product")) {
                String categoryName = type[1].trim(); 
@@ -203,7 +201,7 @@ public class TechStore {
                double price = Double.parseDouble(type[5].trim());
                
                addProduct(categoryName, productId, name, description, price);
-               System.out.println(categories[0].getProducts()[0].toString()); //shows first product of first category, just to test method calls
+               // System.out.println(categories[0].getProducts()[0].toString()); //shows first product of first category, just to test method calls
                
             } else if (type[0].equalsIgnoreCase("purchase")) {
                int custId = Integer.parseInt(type[1].trim());
@@ -215,7 +213,7 @@ public class TechStore {
                Customer cust = getCustomer(custId);
                Product prod = getProduct(categoryName, productId);
                addPurchase(cust, categoryName, prod, amount, purchaseDate);
-               System.out.println("thisCustPurch0 " + cust.getPurchases()[0].toString());//for now, shows first purchase of first customer just to prove it successfully creates
+               // System.out.println("thisCustPurch0 " + cust.getPurchases()[0].toString());//for now, shows first purchase of first customer just to prove it successfully creates
                 
             } else {
                System.out.println("error!");

@@ -1,4 +1,4 @@
-
+package TechStore;
 
 public class Purchase {
 
@@ -53,8 +53,8 @@ public class Purchase {
 	}
 
 	public String toString() {
-		String tmpStr = "PURCHASE Product=" + getProduct().getName() +
-				"| amount=" + getAmount() + "| date=" + getPurchaseDate() + "| Purchase total=$" + (getProduct().getPrice() * getAmount());
+		String tmpStr = "PURCHASE Product = " + getProduct().getName() +
+				" | Amount = " + getAmount() + " | Date = " + getPurchaseDate() + " | Purchase Total = $" + (getProduct().getPrice() * getAmount());
 		return tmpStr;
 	}
 
