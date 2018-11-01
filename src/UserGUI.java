@@ -1,5 +1,19 @@
 package TechStore;
 
+//***********************************************************************
+//*																		*
+//* CIS611					Fall 2018									*
+//*																		*
+//*						Program Assignment PP03							*
+//*																		*
+//*						TechStore system, UserGUI class				*
+//*																		*
+//*						Created 31 Oct 2018								*
+//*																		*
+//*						Saved in UserGUI.java						*
+//*																		*
+//***********************************************************************
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
