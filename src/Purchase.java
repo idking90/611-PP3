@@ -53,7 +53,7 @@ public class Purchase {
 	}
 
 	public String toString() {
-		String tmpStr = "PURCHASE Category=" + getCategoryName() + "| Product=" + getProduct().getName() +
+		String tmpStr = "PURCHASE Product=" + getProduct().getName() +
 				"| amount=" + getAmount() + "| date=" + getPurchaseDate() + "| Purchase total=$" + (getProduct().getPrice() * getAmount());
 		return tmpStr;
 	}

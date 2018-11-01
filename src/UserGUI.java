@@ -28,34 +28,17 @@ public class UserGUI extends JPanel implements ActionListener {
 	 private JTextArea txtArTrans;
 	 private JButton btnBuy;
 	 private JButton btnExit;
+	 private static int numPurch = 0;
+	 private static int maxPurch;
 	 
 	 
-	  private TechStore techStore;
+	  private static TechStore techStore;
 	  private static String fileName = "data.txt";
 
 	  
 	  
 	  
 	  public UserGUI() throws FileNotFoundException  {
-     
-      int n = 0;
-
-      boolean isNum = false;
-         while (!isNum) {
-         try {   
-	         n = Integer.parseInt(JOptionPane.showInputDialog("Input the number of purchases."));
-            isNum = true;
-            if(n < 1) { //this will revert to continue the loop if 0 or negative is entered
-            	isNum=false;
-            }
-         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "An incorrectly formatted value was entered. Make sure number is an integer.", 
-            "Incorrect Entry!", JOptionPane.INFORMATION_MESSAGE);
-           }
-         }
-      
-		  
-		 techStore = new TechStore(fileName);
       // techStore.readFile(fileName);
        
      
@@ -131,13 +114,13 @@ public class UserGUI extends JPanel implements ActionListener {
 		 txtArProduct.setLineWrap(true);
 		 txtArProduct.setWrapStyleWord(true);
 		 txtArProduct.append("Product Info...");
-		 scrollProduct = new JScrollPane(txtArProduct);
+		 scrollProduct = new JScrollPane(txtArProduct, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		 txtArTrans = new JTextArea(10, 300);
 		 txtArTrans.setEditable(false);
 		 txtArTrans.setLineWrap(true);
 		 txtArTrans.setWrapStyleWord(true);
 		 txtArTrans.append("Customer Info...");
-		 scrollTrans = new JScrollPane(txtArTrans);
+		 scrollTrans = new JScrollPane(txtArTrans, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		 btnBuy = new JButton("Buy");
 		 btnExit = new JButton("Exit");
@@ -166,7 +149,7 @@ public class UserGUI extends JPanel implements ActionListener {
 	      top.add(new JLabel(""));
 	      
 	      prodTA.setLayout( new BorderLayout());
-	      prodTA.add(txtArProduct, "North");
+	      prodTA.add(scrollProduct);
 	      
 	      buy.setLayout(new GridLayout(4,2));
 	      buy.add(lblCustomer);
@@ -179,11 +162,12 @@ public class UserGUI extends JPanel implements ActionListener {
 	      buyBtnPan.setLayout(new FlowLayout(FlowLayout.CENTER));
 	      buyBtnPan.add(btnBuy);
 
-	   bottom.setLayout( new GridLayout(2, 1));
-	   bottom.setPreferredSize(new Dimension(300, 500));
+	      bottom.setLayout( new GridLayout());
+		   bottom.setPreferredSize(new Dimension(300, 500));		      
+		   bottom.setPreferredSize(new Dimension(300, 500));
 	      bottom.add(lblTrans);
-	      
-	      bottom.add(txtArTrans);
+	       //  bottom.add(txtArTrans);
+	         bottom.add(scrollTrans);
 	      
 	      
 	      exitPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -221,6 +205,22 @@ public class UserGUI extends JPanel implements ActionListener {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
+
+	      boolean isNum = false;
+	         while (!isNum) {
+	         try {   
+		         maxPurch = Integer.parseInt(JOptionPane.showInputDialog("Input the number of purchases."));
+	            isNum = true;
+	            if(maxPurch < 1) { //this will revert to continue the loop if 0 or negative is entered
+	            	isNum=false;
+	            }
+	         } catch (NumberFormatException nfe) {
+	            JOptionPane.showMessageDialog(null, "An incorrectly formatted value was entered. Make sure number is an integer.", 
+	            "Incorrect Entry!", JOptionPane.INFORMATION_MESSAGE);
+	           }
+	         }
+	     techStore = new TechStore(fileName);
+		
 		JFrame f = new JFrame("Tech Store");
       f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       Container contentPane = f.getContentPane();
@@ -228,7 +228,8 @@ public class UserGUI extends JPanel implements ActionListener {
       f.pack();
       f.setSize(500, 500);
       f.setVisible(true);
-  }
+  
+	}
 
 	public void buyButton_ActionPerformed(ActionEvent e) {
 		
@@ -277,7 +278,16 @@ public class UserGUI extends JPanel implements ActionListener {
 										"Category-" + catName + s + "Product-" + theProduct.getName() + s +
 										"Amount-" + numItems + s + "Date-" + dateAsString + s + "Total-$" + purchaseTotal;
 		
+		String lineToWriteToFile = "purchase; " +
+									theCustomer.getID() + "; " +
+									catName + "; " +
+									theProduct.getID() + "; " +
+									numItems + "; " +
+									dateAsString;
+									
+		techStore.writeFile(lineToWriteToFile);
 		txtArTrans.append(purchaseAddedToOutputArea);
+		
 		
 		//clearing inputs for next purchase
 		cboCategory.setSelectedIndex(0);
@@ -286,11 +296,17 @@ public class UserGUI extends JPanel implements ActionListener {
 		txtAmount.setText("");
 		txtDate.setText("MM/dd/yyyy");
 		
+		numPurch ++;
+		if(numPurch >= maxPurch) {
+			JOptionPane.showMessageDialog(null, "You have reached your max of " + maxPurch + " purchases. Closing program");
+			close();
+		}
+		
 	}//end buyButton_action
 	
 	public void cboCustomer_ActionPerformed(ActionEvent e) {
 		//change txtArTrans
-		if(cboCustomer.getSelectedItem().toString().trim().equals("")) {//nothing selected
+		if(cboCustomer.getSelectedItem()==null || cboCustomer.getSelectedItem().toString().trim().equals("")) {//nothing selected
 			return;
 		}
 		
@@ -311,7 +327,7 @@ public class UserGUI extends JPanel implements ActionListener {
 	
 	public void cboCategory_ActionPerformed(ActionEvent e) {
 		//update cboProduct
-		if(cboCategory.getSelectedItem().toString().trim().equals("")) {
+		if(cboCategory.getSelectedItem() ==null || cboCategory.getSelectedItem().toString().trim().equals("")) {
 			return;
 		}
 		Category theCat = techStore.getCategory(cboCategory.getSelectedItem().toString());
@@ -332,9 +348,10 @@ public class UserGUI extends JPanel implements ActionListener {
 	
 	public void cboProduct_ActionPerformed(ActionEvent e) {
 		//update txtArProduct
-		if(cboProduct.getSelectedItem().toString().trim().equals("")) {
+		if(cboProduct.getSelectedItem() == null || cboProduct.getSelectedItem().toString().trim().equals("")) {
 			return;
 		}
+		
 		else {
 			Product theProduct = techStore.getProduct(cboCategory.getSelectedItem().toString(),
 					cboProduct.getSelectedItem().toString());

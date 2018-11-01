@@ -16,8 +16,14 @@ product; Tablets; 1235; iPad mini 2; Apple - iPad® mini 2 with Wi-Fi - 16GB - Si
 product; Tablets; 1250; iPad mini 3; Apple - iPad mini 3 Wi-Fi 128GB - Space Gray; 450.06
 product; Tablets; 1263; iPad Air; Apple - iPad Air 2 Wi-Fi 16GB - Space Gray; 510.88
 product; Tablets; 1274; Samsung Tablet; Samsung - Galaxy Tab Pro - 10.1" - 16GB - Black; 299.00
+product; Tablets; 1234; Thing-Doer; It does things for you; 34883.32
 purchase; 20200; Phones;  1166; 1; 02/20/2016
 purchase; 20200; Phones;  1125; 2; 04/09/2016
 purchase; 20232; Tablets; 1274; 1; 06/28/2016
 purchase; 20232; Phones;  1166; 3; 06/29/2016
 purchase; 20232; Laptops; 1088; 1; 08/22/2016
+purchase; 20221; Laptops; 1015; 3; 05/31/1990
+purchase; 20221; Tablets; 1250; 3; 03/31/1993
+purchase; 20221; Tablets; 1235; 3; 03/31/1990
+purchase; 20200; Phones; 1108; 2; 04/29/2014
+purchase; 20232; Tablets; 1274; 12; 05/31/1990

@@ -48,7 +48,7 @@ public class TechStore {
 		// calls customer object to purchase a product
 		customer.addPurchase(categoryName, prod, amount, date);
 		String lineInFile = "purchase; " + customer.getID() + "; " + categoryName + "; "+ prod.getID() + " ;" + amount + "; " + date;		
-		writeFile(lineInFile);//might need to move to Purchase class method
+		
 	}
 	
 	public void addProduct(String categoryName, int id, String name, String description, double price) {
@@ -230,6 +230,16 @@ public class TechStore {
 
     public void writeFile(String trans) {
 		// write/append any new transaction (purchase) data to the data.txt file
+    	
+    	try { 
+            FileWriter fw = new FileWriter(fileName, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.newLine();
+            bw.write(trans);
+            bw.close();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
 	}
 
 }
