@@ -1,5 +1,19 @@
 package TechStore;
 
+//***********************************************************************
+//*																		*
+//* CIS611					Fall 2018									*
+//*																		*
+//*						Program Assignment PP03							*
+//*																		*
+//*						TechStore system, Customer class				*
+//*																		*
+//*						Created 31 Oct 2018								*
+//*																		*
+//*						Saved in Customer.java						*
+//*																		*
+//***********************************************************************
+
 import java.util.Arrays;
 
 public class Customer {

@@ -1,5 +1,19 @@
 package TechStore;
 
+//***********************************************************************
+//*																		*
+//* CIS611					Fall 2018									*
+//*																		*
+//*						Program Assignment PP03							*
+//*																		*
+//*						TechStore system, Purchase class				*
+//*																		*
+//*						Created 31 Oct 2018								*
+//*																		*
+//*						Saved in Purchase.java						*
+//*																		*
+//***********************************************************************
+
 public class Purchase {
 
 	private String categoryName; 
