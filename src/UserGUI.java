@@ -205,11 +205,20 @@ public class UserGUI extends JPanel implements ActionListener {
 	      boolean isNum = false;
 	         while (!isNum) {
 	         try {   
-		         maxPurch = Integer.parseInt(JOptionPane.showInputDialog("Input the number of purchases."));
-	            isNum = true;
-	            if(maxPurch < 1) { //this will revert to continue the loop if 0 or negative is entered
+               String input = JOptionPane.showInputDialog(null, "Input the number of purchases.");
+	            
+               if (input != null) { 
+                  maxPurch = Integer.parseInt(input);
+                  isNum = true;
+                  } else if (input == null) { //program will exit if user selects cancel or exit
+                     System.exit(0);
+                  }
+                     
+	            if (maxPurch < 1) { //this will revert to continue the loop if 0 or negative is entered
+                  JOptionPane.showMessageDialog(null, "An incorrectly formatted value was entered. Make sure number is an integer.", 
+	               "Incorrect Entry!", JOptionPane.INFORMATION_MESSAGE);
 	            	isNum=false;
-	            }
+                 }
 	         } catch (NumberFormatException nfe) {
 	            JOptionPane.showMessageDialog(null, "An incorrectly formatted value was entered. Make sure number is an integer.", 
 	            "Incorrect Entry!", JOptionPane.INFORMATION_MESSAGE);
